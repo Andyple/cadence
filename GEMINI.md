@@ -1,4 +1,4 @@
-# 🍅 Spotify Pomodoro Focus Timer
+# Spotify Pomodoro Focus Timer
 
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![Spotify](https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white)
@@ -26,6 +26,14 @@ A premium web-based Pomodoro focus timer that directly integrates with the Spoti
 * **Authentication:** Auth.js (NextAuth)
 * **Database:** Supabase (PostgreSQL)
 * **API:** Spotify Web API (Connect / Player endpoints)
+
+## Front end
+
+* Try to fit everything on one page
+* Optional options such as auto-dj, smart pausing, should be in a sidebar that will be opened with a button (like a hamburger button)
+* The center of the screen should be the timer
+* Login button in the top right
+* Web page should look modern and really "to the point". There shouldn't be anything to distract the user.
 
 ## Prerequisites
 
