@@ -1,18 +1,37 @@
 import NextAuth from "next-auth";
 import Spotify from "next-auth/providers/spotify";
-import { SupabaseAdapter } from "@auth/supabase-adapter";
+
+// Development workaround: Next.js dev server forces req.url to localhost,
+// which breaks Spotify's strict 127.0.0.1 redirect_uri validation during token exchange.
+if (process.env.NODE_ENV === "development") {
+  const originalFetch = global.fetch;
+  global.fetch = async (url, options) => {
+    if (url === "https://accounts.spotify.com/api/token" && options?.body) {
+      if (typeof options.body === "string" && options.body.includes("localhost")) {
+        options.body = options.body.replace(/localhost/g, "127.0.0.1");
+      } else if (options.body instanceof URLSearchParams) {
+        const redirectUri = options.body.get("redirect_uri");
+        if (redirectUri && redirectUri.includes("localhost")) {
+          options.body.set("redirect_uri", redirectUri.replace(/localhost/g, "127.0.0.1"));
+        }
+      }
+    }
+    return originalFetch(url, options);
+  };
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  debug: true,
   providers: [
     Spotify({
-      authorization:
-        "https://accounts.spotify.com/authorize?scope=user-read-email,user-read-private,user-modify-playback-state,user-read-currently-playing,user-read-playback-state,streaming,playlist-read-private,playlist-read-collaborative",
+      authorization: `https://accounts.spotify.com/authorize?scope=${encodeURIComponent(
+        "user-read-email user-read-private user-modify-playback-state user-read-currently-playing user-read-playback-state streaming playlist-read-private playlist-read-collaborative"
+      )}`,
     }),
   ],
-  adapter: SupabaseAdapter({
-    url: process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    secret: process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  }),
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
