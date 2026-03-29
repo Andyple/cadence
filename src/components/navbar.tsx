@@ -1,11 +1,15 @@
 import { auth, signIn, signOut } from "@/auth";
+import { SidebarToggle } from "./sidebar-toggle";
 
 export async function Navbar() {
   const session = await auth();
 
   return (
-    <nav className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
-      <div className="text-xl font-bold tracking-tight">Cadence</div>
+    <nav className="flex items-center justify-between px-6 py-4 border-b border-zinc-800 bg-zinc-950/50 backdrop-blur-md sticky top-0 z-50">
+      <div className="flex items-center gap-4">
+        <SidebarToggle />
+        <div className="text-xl font-bold tracking-tight">Cadence</div>
+      </div>
       <div className="flex items-center gap-4">
         {session?.user ? (
           <form
