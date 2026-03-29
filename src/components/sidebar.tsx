@@ -35,7 +35,7 @@ export function Sidebar({ playlists }: SidebarProps) {
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity"
+          className="fixed inset-0 bg-black/20 dark:bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300"
           onClick={closeSidebar}
         />
       )}
@@ -43,17 +43,17 @@ export function Sidebar({ playlists }: SidebarProps) {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed top-0 left-0 h-full w-80 bg-zinc-950 border-r border-zinc-800 z-50 transform transition-transform duration-300 ease-in-out",
+          "fixed top-0 left-0 h-full w-80 bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 z-50 transform transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full text-zinc-900 dark:text-zinc-50 transition-colors duration-300">
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-5 border-b border-zinc-800">
+          <div className="flex items-center justify-between px-6 py-5 border-b border-zinc-200 dark:border-zinc-800 transition-colors duration-300">
             <h2 className="text-lg font-bold">Focus Settings</h2>
             <button
               onClick={closeSidebar}
-              className="p-1 hover:bg-zinc-800 rounded-md transition-colors"
+              className="p-1 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -65,22 +65,22 @@ export function Sidebar({ playlists }: SidebarProps) {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Zap className={cn("w-5 h-5", autoDjFocusEnabled ? "text-yellow-400" : "text-zinc-500")} />
+                  <Zap className={cn("w-5 h-5", autoDjFocusEnabled ? "text-yellow-500 dark:text-yellow-400" : "text-zinc-400 dark:text-zinc-500")} />
                   <div>
                     <div className="font-semibold text-sm">Focus Auto-DJ</div>
-                    <div className="text-xs text-zinc-500">Play music during focus</div>
+                    <div className="text-xs text-zinc-500 dark:text-zinc-400">Play music during focus</div>
                   </div>
                 </div>
                 <button
                   onClick={() => setAutoDjFocusEnabled(!autoDjFocusEnabled)}
                   className={cn(
-                    "w-12 h-6 rounded-full transition-colors relative focus:outline-none focus:ring-2 focus:ring-zinc-700",
-                    autoDjFocusEnabled ? "bg-green-500" : "bg-zinc-800"
+                    "w-12 h-6 rounded-full transition-colors relative focus:outline-none focus:ring-2 focus:ring-zinc-200 dark:focus:ring-zinc-700",
+                    autoDjFocusEnabled ? "bg-green-500" : "bg-zinc-200 dark:bg-zinc-800"
                   )}
                 >
                   <div
                     className={cn(
-                      "absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform",
+                      "absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform shadow-sm",
                       autoDjFocusEnabled ? "translate-x-6" : "translate-x-0"
                     )}
                   />
@@ -89,13 +89,13 @@ export function Sidebar({ playlists }: SidebarProps) {
 
               {autoDjFocusEnabled && (
                 <div className="space-y-3 pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                  <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">
+                  <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
                     Focus Playlist
                   </div>
                   <select
                     value={focusPlaylistId || ""}
                     onChange={(e) => setFocusPlaylistId(e.target.value)}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-800 transition-all appearance-none cursor-pointer hover:border-zinc-700"
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-200 dark:focus:ring-zinc-800 transition-all appearance-none cursor-pointer hover:border-zinc-300 dark:hover:border-zinc-700 text-zinc-900 dark:text-zinc-50"
                   >
                     <option value="">Select a playlist...</option>
                     {playlists.map((p) => (
@@ -112,22 +112,22 @@ export function Sidebar({ playlists }: SidebarProps) {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Music className={cn("w-5 h-5", autoDjBreakEnabled ? "text-green-400" : "text-zinc-500")} />
+                  <Music className={cn("w-5 h-5", autoDjBreakEnabled ? "text-green-500 dark:text-green-400" : "text-zinc-400 dark:text-zinc-500")} />
                   <div>
                     <div className="font-semibold text-sm">Break Auto-DJ</div>
-                    <div className="text-xs text-zinc-500">Play music during breaks</div>
+                    <div className="text-xs text-zinc-500 dark:text-zinc-400">Play music during breaks</div>
                   </div>
                 </div>
                 <button
                   onClick={() => setAutoDjBreakEnabled(!autoDjBreakEnabled)}
                   className={cn(
-                    "w-12 h-6 rounded-full transition-colors relative focus:outline-none focus:ring-2 focus:ring-zinc-700",
-                    autoDjBreakEnabled ? "bg-green-500" : "bg-zinc-800"
+                    "w-12 h-6 rounded-full transition-colors relative focus:outline-none focus:ring-2 focus:ring-zinc-200 dark:focus:ring-zinc-700",
+                    autoDjBreakEnabled ? "bg-green-500" : "bg-zinc-200 dark:bg-zinc-800"
                   )}
                 >
                   <div
                     className={cn(
-                      "absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform",
+                      "absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform shadow-sm",
                       autoDjBreakEnabled ? "translate-x-6" : "translate-x-0"
                     )}
                   />
@@ -136,13 +136,13 @@ export function Sidebar({ playlists }: SidebarProps) {
 
               {autoDjBreakEnabled && (
                 <div className="space-y-3 pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                  <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 uppercase tracking-wider">
+                  <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
                     Break Playlist
                   </div>
                   <select
                     value={breakPlaylistId || ""}
                     onChange={(e) => setBreakPlaylistId(e.target.value)}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-800 transition-all appearance-none cursor-pointer hover:border-zinc-700"
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-200 dark:focus:ring-zinc-800 transition-all appearance-none cursor-pointer hover:border-zinc-300 dark:hover:border-zinc-700 text-zinc-900 dark:text-zinc-50"
                   >
                     <option value="">Select a playlist...</option>
                     {playlists.map((p) => (
@@ -160,25 +160,25 @@ export function Sidebar({ playlists }: SidebarProps) {
               (!autoDjFocusEnabled && !autoDjBreakEnabled) ? "opacity-50" : "opacity-100"
             )}>
               <div className="flex items-center gap-3">
-                <Shield className={cn("w-5 h-5", smartPausingEnabled && (autoDjFocusEnabled || autoDjBreakEnabled) ? "text-blue-400" : "text-zinc-500")} />
+                <Shield className={cn("w-5 h-5", smartPausingEnabled && (autoDjFocusEnabled || autoDjBreakEnabled) ? "text-blue-500 dark:text-blue-400" : "text-zinc-400 dark:text-zinc-500")} />
                 <div>
                   <div className="font-semibold text-sm">Smart Pausing</div>
-                  <div className="text-xs text-zinc-500">Wait for track to finish</div>
+                  <div className="text-xs text-zinc-500 dark:text-zinc-400">Wait for track to finish</div>
                 </div>
               </div>
               <button
                 disabled={!autoDjFocusEnabled && !autoDjBreakEnabled}
                 onClick={() => setSmartPausingEnabled(!smartPausingEnabled)}
                 className={cn(
-                  "w-12 h-6 rounded-full transition-colors relative focus:outline-none focus:ring-2 focus:ring-zinc-700 disabled:cursor-not-allowed",
-                  smartPausingEnabled && (autoDjFocusEnabled || autoDjBreakEnabled) ? "bg-green-500" : "bg-zinc-800"
+                  "w-12 h-6 rounded-full transition-colors relative focus:outline-none focus:ring-2 focus:ring-zinc-200 dark:focus:ring-zinc-700 disabled:cursor-not-allowed",
+                  smartPausingEnabled && (autoDjFocusEnabled || autoDjBreakEnabled) ? "bg-green-500" : "bg-zinc-200 dark:bg-zinc-800"
                 )}
               >
                 <div
                   className={cn(
-                    "absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform",
+                    "absolute top-1 left-1 w-4 h-4 rounded-full transition-transform shadow-sm",
                     smartPausingEnabled && (autoDjFocusEnabled || autoDjBreakEnabled) ? "translate-x-6" : "translate-x-0",
-                    (!autoDjFocusEnabled && !autoDjBreakEnabled) ? "bg-zinc-500" : "bg-white"
+                    (!autoDjFocusEnabled && !autoDjBreakEnabled) ? "bg-zinc-400 dark:bg-zinc-500" : "bg-white"
                   )}
                 />
               </button>
@@ -186,8 +186,8 @@ export function Sidebar({ playlists }: SidebarProps) {
           </div>
 
           {/* Footer */}
-          <div className="p-6 border-t border-zinc-800">
-            <div className="flex items-center gap-3 text-zinc-500">
+          <div className="p-6 border-t border-zinc-200 dark:border-zinc-800 transition-colors duration-300">
+            <div className="flex items-center gap-3 text-zinc-500 dark:text-zinc-400">
               <Music className="w-4 h-4" />
               <span className="text-xs italic">Syncing with Spotify...</span>
             </div>

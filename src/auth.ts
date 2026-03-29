@@ -21,6 +21,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  trustHost: true,
   basePath: "/api/auth",
   debug: true,
   providers: [
