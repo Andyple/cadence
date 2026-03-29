@@ -11,7 +11,7 @@ export async function Navbar() {
           <form
             action={async () => {
               "use server";
-              await signOut();
+              await signOut({ redirectTo: "http://127.0.0.1:3000/" });
             }}
           >
             <button className="text-sm font-medium hover:text-zinc-400 transition-colors">
@@ -22,7 +22,7 @@ export async function Navbar() {
           <form
             action={async () => {
               "use server";
-              await signIn("spotify");
+              await signIn("spotify", { redirectTo: "http://127.0.0.1:3000/" });
             }}
           >
             <button className="px-4 py-2 bg-green-500 hover:bg-green-600 text-black font-semibold rounded-full text-sm transition-colors">

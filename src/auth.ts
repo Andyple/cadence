@@ -21,6 +21,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  basePath: "/api/auth",
   debug: true,
   providers: [
     Spotify({
@@ -33,6 +34,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     strategy: "jwt",
   },
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      if (process.env.NODE_ENV === "development") {
+        url = url.replace("localhost", "127.0.0.1");
+        baseUrl = baseUrl.replace("localhost", "127.0.0.1");
+      }
+      try {
+        if (url.startsWith("/")) return `${baseUrl}${url}`;
+        else if (new URL(url).origin === baseUrl) return url;
+      } catch (e) {
+        // Fallback if URL parsing fails
+      }
+      return baseUrl;
+    },
     async jwt({ token, account }) {
       if (account) {
         token.accessToken = account.access_token;
