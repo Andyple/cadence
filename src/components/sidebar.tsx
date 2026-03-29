@@ -156,25 +156,29 @@ export function Sidebar({ playlists }: SidebarProps) {
             </div>
 
             {/* Smart Pausing Toggle */}
-            <div className="flex items-center justify-between">
+            <div className={cn("flex items-center justify-between transition-opacity duration-300", 
+              (!autoDjFocusEnabled && !autoDjBreakEnabled) ? "opacity-50" : "opacity-100"
+            )}>
               <div className="flex items-center gap-3">
-                <Shield className={cn("w-5 h-5", smartPausingEnabled ? "text-blue-400" : "text-zinc-500")} />
+                <Shield className={cn("w-5 h-5", smartPausingEnabled && (autoDjFocusEnabled || autoDjBreakEnabled) ? "text-blue-400" : "text-zinc-500")} />
                 <div>
                   <div className="font-semibold text-sm">Smart Pausing</div>
                   <div className="text-xs text-zinc-500">Wait for track to finish</div>
                 </div>
               </div>
               <button
+                disabled={!autoDjFocusEnabled && !autoDjBreakEnabled}
                 onClick={() => setSmartPausingEnabled(!smartPausingEnabled)}
                 className={cn(
-                  "w-12 h-6 rounded-full transition-colors relative",
-                  smartPausingEnabled ? "bg-green-500" : "bg-zinc-800"
+                  "w-12 h-6 rounded-full transition-colors relative focus:outline-none focus:ring-2 focus:ring-zinc-700 disabled:cursor-not-allowed",
+                  smartPausingEnabled && (autoDjFocusEnabled || autoDjBreakEnabled) ? "bg-green-500" : "bg-zinc-800"
                 )}
               >
                 <div
                   className={cn(
                     "absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform",
-                    smartPausingEnabled ? "translate-x-6" : "translate-x-0"
+                    smartPausingEnabled && (autoDjFocusEnabled || autoDjBreakEnabled) ? "translate-x-6" : "translate-x-0",
+                    (!autoDjFocusEnabled && !autoDjBreakEnabled) ? "bg-zinc-500" : "bg-white"
                   )}
                 />
               </button>
