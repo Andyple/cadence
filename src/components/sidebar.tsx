@@ -1,7 +1,8 @@
 "use client";
 
 import { useSidebar } from "./sidebar-context";
-import { X, Music, Shield, Zap } from "lucide-react";
+import { useTimer } from "./timer-context";
+import { X, Music, Shield, Zap, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Playlist {
@@ -29,6 +30,8 @@ export function Sidebar({ playlists }: SidebarProps) {
     breakPlaylistId,
     setBreakPlaylistId,
   } = useSidebar();
+  
+  const { focusDuration, setFocusDuration, breakDuration, setBreakDuration } = useTimer();
 
   return (
     <>
@@ -50,7 +53,7 @@ export function Sidebar({ playlists }: SidebarProps) {
         <div className="flex flex-col h-full text-zinc-900 dark:text-zinc-50 transition-colors duration-300">
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-5 border-b border-zinc-200 dark:border-zinc-800 transition-colors duration-300">
-            <h2 className="text-lg font-bold">Focus Settings</h2>
+            <h2 className="text-lg font-bold">Settings</h2>
             <button
               onClick={closeSidebar}
               className="p-1 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-md transition-colors"
@@ -61,6 +64,46 @@ export function Sidebar({ playlists }: SidebarProps) {
 
           {/* Content */}
           <div className="flex-1 overflow-y-auto p-6 space-y-8">
+            
+            {/* Durations Section */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 mb-4">
+                <Clock className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
+                <div className="font-semibold text-sm">Durations (Minutes)</div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                    Focus
+                  </label>
+                  <input 
+                    type="number" 
+                    min="1" 
+                    max="120"
+                    value={focusDuration}
+                    onChange={(e) => setFocusDuration(Math.max(1, parseInt(e.target.value) || 1))}
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-200 dark:focus:ring-zinc-800 transition-colors text-zinc-900 dark:text-zinc-50"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                    Break
+                  </label>
+                  <input 
+                    type="number" 
+                    min="1" 
+                    max="60"
+                    value={breakDuration}
+                    onChange={(e) => setBreakDuration(Math.max(1, parseInt(e.target.value) || 1))}
+                    className="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-200 dark:focus:ring-zinc-800 transition-colors text-zinc-900 dark:text-zinc-50"
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div className="w-full h-px bg-zinc-200 dark:bg-zinc-800" />
+
             {/* Focus Auto-DJ Toggle */}
             <div className="space-y-4">
               <div className="flex items-center justify-between">
