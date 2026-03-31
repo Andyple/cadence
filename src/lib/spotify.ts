@@ -18,6 +18,14 @@ async function fetchWebApi(endpoint: string, method: string, token: string, body
   }
 
   if (!res.ok) {
+    if (res.status === 401) {
+      const errorData = await res.json().catch(() => ({}));
+      console.error("[Spotify API 401 Debug]:", {
+        tokenSnippet: token ? `${token.substring(0, 10)}...` : "null",
+        error: errorData,
+        endpoint
+      });
+    }
     throw new Error(`Spotify API error ${res.status}: ${res.statusText}`);
   }
 
