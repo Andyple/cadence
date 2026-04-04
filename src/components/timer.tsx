@@ -28,7 +28,8 @@ export function Timer() {
   // SVG Circle calculations
   const radius = 180;
   const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - progress * circumference;
+  // Use negative offset to make the ring drain clockwise
+  const strokeDashoffset = -(circumference - progress * circumference);
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center w-full max-w-4xl py-12">
@@ -59,9 +60,12 @@ export function Timer() {
             strokeWidth="12"
             strokeLinecap="round"
             strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
+            style={{
+              strokeDashoffset,
+              transition: isRunning ? "stroke-dashoffset 1s linear" : "stroke-dashoffset 0.5s ease-in-out",
+            }}
             className={cn(
-              "transition-all duration-1000 ease-linear",
+              "transition-colors duration-300",
               currentPhase === "focus"
                 ? "text-zinc-900 dark:text-zinc-50"
                 : "text-blue-500 dark:text-blue-400"
