@@ -31,7 +31,8 @@ export function TimerProvider({ children }: { children: ReactNode }) {
       if (currentPhase === "focus") setTimeRemaining(focusDuration * 60);
       else setTimeRemaining(breakDuration * 60);
     }
-  }, [focusDuration, breakDuration, currentPhase, isRunning]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusDuration, breakDuration, currentPhase]);
 
   const toggleTimer = useCallback(() => setIsRunning((prev) => !prev), []);
 
